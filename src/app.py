@@ -1,4 +1,3 @@
-
 from pathlib import Path
 
 import joblib
@@ -7,10 +6,9 @@ import pandas as pd
 import streamlit as st
 
 
-# ==================================================
+ 
 # 1. PROJECT PATHS
-# ==================================================
-
+ 
 PROJECT_DIR = Path(__file__).resolve().parents[1]
 
 MODEL_PATH = (
@@ -27,10 +25,9 @@ ROUTE_PATH = (
 )
 
 
-# ==================================================
+ 
 # 2. CATEGORY DISPLAY NAMES
-# ==================================================
-
+ 
 CATEGORY_NAMES = {
     "AMTB": "Amrit Bharat Express",
     "DMU": "Diesel Multiple Unit",
@@ -65,9 +62,8 @@ def category_label(code):
     return f"{code} — {description}"
 
 
-# ==================================================
+ 
 # 3. STREAMLIT CONFIGURATION
-# ==================================================
 
 st.set_page_config(
     page_title="BookWisely - Train Delay Predictor",
@@ -75,7 +71,7 @@ st.set_page_config(
 )
 
 st.title("BookWisely")
-    
+
 st.subheader("Route-Based Train Arrival Delay Predictor")
 
 st.write(
@@ -86,10 +82,9 @@ st.write(
 st.divider()
 
 
-# ==================================================
+ 
 # 4. LOAD SAVED MODELS AND ROUTE DATA
-# ==================================================
-
+ 
 @st.cache_resource
 def load_model_bundle():
 
@@ -131,10 +126,9 @@ preprocessor = bundle["preprocessor"]
 feature_columns = bundle["feature_columns"]
 
 
-# ==================================================
+ 
 # 5. PREPARE AVAILABLE STATIONS AND CATEGORIES
-# ==================================================
-
+ 
 categorical_encoder = (
     preprocessor.named_transformers_["categorical"]
 )
@@ -196,10 +190,9 @@ destination_options = sorted(
 category_options = sorted(trained_categories)
 
 
-# ==================================================
+ 
 # 6. APPLICATION INPUTS
-# ==================================================
-
+ 
 st.header("Find Your Train Route")
 
 with st.form("route_search_form"):
@@ -266,10 +259,9 @@ with st.form("route_search_form"):
     )
 
 
-# ==================================================
+ 
 # 7. FIND MATCHING TRAIN ROUTES
-# ==================================================
-
+ 
 if search_submitted:
 
     if source_station is None or destination_station is None:
@@ -360,10 +352,9 @@ if search_submitted:
         st.stop()
 
 
-    # ==================================================
+     
     # 8. SUMMARIZE HISTORICAL TRAIN SERVICES
-    # ==================================================
-
+     
     def most_common_value(series):
 
         values = series.dropna().mode()
@@ -437,10 +428,9 @@ if search_submitted:
     )
 
 
-    # ==================================================
+     
     # 9. PREPARE INPUT FEATURES FOR ALL ROUTES
-    # ==================================================
-
+     
     model_inputs = pd.DataFrame({
 
         "category": route_summary["category"].astype(str),
@@ -457,10 +447,9 @@ if search_submitted:
     model_inputs = model_inputs[feature_columns]
 
 
-    # ==================================================
+     
     # 10. GENERATE PREDICTIONS
-    # ==================================================
-
+    
     predictions = {}
 
     # HistGradientBoosting uses its own Pipeline and
@@ -506,10 +495,9 @@ if search_submitted:
             )
 
 
-    # ==================================================
+     
     # 11. DISPLAY ROUTE AND PREDICTION RESULTS
-    # ==================================================
-
+     
     st.divider()
 
     st.header("Available Train Services")
@@ -584,10 +572,9 @@ if search_submitted:
     )
 
 
-    # ==================================================
+     
     # 12. ROUTE SUMMARY
-    # ==================================================
-
+     
     st.divider()
 
     st.subheader("Route Search Summary")
@@ -622,9 +609,8 @@ if search_submitted:
     )
 
 
-# ==================================================
+ 
 # 13. FOOTER
-# ==================================================
 
 st.divider()
 
