@@ -1,23 +1,74 @@
-# Virtual environment
+# Python virtual environments
+
 .venv/
+venv/
+env/
+ENV/
 
-# Python cache
+
+# Python cache files
+
+
 __pycache__/
-*.pyc
+*.py[cod]
+*$py.class
 
-# Jupyter checkpoints
+
+# Jupyter Notebook temporary files
+
+
 .ipynb_checkpoints/
 
-# Large datasets - keep locally
+
+# Large local datasets
+
+
+# Original raw dataset
 Data/raw/
+
+# 10% sample dataset (kept locally)
 Data/interim/
-Data/processed/
 
-# Generated models
-Models/*
+# Cleaned modeling dataset (can be regenerated)
+Data/processed/modeling_data_clean.parquet
 
-# Environment variables
+# Keep route lookup data because the application needs it
+# Data/processed/route_stops.parquet must remain tracked
+
+
+# Model files
+
+
+# Ignore other saved models
+Models/*.joblib
+
+# Keep the model bundle required by the application
+!Models/bookwisely_all_models.joblib
+
+
+# Environment and secret files
+
 .env
+.env.*
+!.env.example
 
-# Temporary outputs
-Output/temp/
+
+# Logs and temporary files
+
+*.log
+*.tmp
+
+
+# Operating system files
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+
+# Editor and testing files
+
+.vscode/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
