@@ -1,0 +1,23 @@
+# Virtual environment
+.venv/
+
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
+
+# Large datasets - keep locally
+Data/raw/
+Data/interim/
+Data/processed/
+
+# Generated models
+Models/*
+
+# Environment variables
+.env
+
+# Temporary outputs
+Output/temp/
