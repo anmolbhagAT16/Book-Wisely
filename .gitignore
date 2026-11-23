@@ -31,6 +31,7 @@ Data/interim/
 
 # Cleaned modeling dataset (can be regenerated)
 Data/processed/modeling_data_clean.parquet
+Data/processed/route_stops.parquet
 
 # Keep route lookup data because the application needs it
 # Data/processed/route_stops.parquet must remain tracked
