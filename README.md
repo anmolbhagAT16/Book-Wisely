@@ -1,18 +1,18 @@
-#  BookWisely – Train Arrival Delay Prediction
+# Book-Wisely – Train Arrival Delay Prediction
 
-BookWisely is a machine learning-based train arrival delay prediction project developed using Python, Pandas, and Scikit-learn.
+Book-Wisely is a machine learning-based train arrival delay prediction project developed using Python, Pandas, and Scikit-learn.
 
 The project analyzes historical railway data, identifies train routes, and predicts estimated arrival delays at destination stations using three regression algorithms.
 
-The application provides a route-based interface where users can select source and destination stations, explore matching train services, and compare predicted arrival delays from different models.
+The application provides a date-based, route-based interface where users can select a travel date, source station, and destination station, explore matching train services, and compare predicted arrival delays from different models.
 
-**Note:** BookWisely provides historical-data-based machine learning estimates. It does not provide live train-running status or guaranteed predictions.
+**Note:** Book-Wisely provides historical-data-based machine learning estimates. It does not provide live train-running status or guaranteed predictions.
 
 ---
 
 ## 1. Project Objectives
 
-The main objectives of BookWisely are:
+The main objectives of Book-Wisely are:
 
 - Analyze historical train-running data using Pandas.
 - Perform data cleaning and exploratory data analysis.
@@ -28,9 +28,15 @@ The main objectives of BookWisely are:
 
 The project uses a 10% sample of a larger railway dataset.
 
+**Dataset Source:** The dataset was obtained from the Hugging Face repository:
+
+[Indian Railways Delays Dataset](https://huggingface.co/datasets/pjay-in/indian-railways-delays)
+
+**Dataset Creator:** [Priyanshu Jain (@pjay-in)](https://huggingface.co/pjay-in)
+
 The dataset contains information about train services, station sequences, scheduled arrival and departure times, actual running information, and arrival delays.
 
-### Dataset overview
+### Dataset Overview
 
 | Description | Details |
 |---|---:|
@@ -43,7 +49,7 @@ The dataset contains information about train services, station sequences, schedu
 
 The raw dataset and large intermediate files are maintained locally and are not included in the GitHub repository.
 
-### Important data preparation steps
+### Important Data Preparation Steps
 
 - Selected completed train runs.
 - Excluded origin-station records from arrival-delay modeling because their arrival information is naturally unavailable.
@@ -86,7 +92,7 @@ Since arrival delay is a continuous numerical value measured in minutes, the pro
 | Feature | Description |
 |---|---|
 | category | Train service category |
-| seq | Destination station sequence |
+| seq | Destination station sequence used internally by the prediction model |
 | station_code | Destination station code |
 | scheduled_arrival_hour | Scheduled arrival hour in IST |
 
@@ -176,23 +182,24 @@ Further improvements may be possible through additional feature engineering, his
 
 ---
 
-## 8. BookWisely Application
+## 8. Book-Wisely Application
 
-The project includes a Streamlit application for route-based arrival delay prediction.
+The project includes a Streamlit application for date-based, route-based train arrival delay prediction.
 
 ### Application Features
 
 - Searchable source station dropdown.
 - Searchable destination station dropdown.
+- Travel-date selection, including future dates.
 - Train category selection with category descriptions.
-- Automatic destination station sequence identification.
-- Automatic scheduled arrival hour identification.
-- Multiple matching train services.
+- Matching train services for the selected route and date.
 - Prediction using Linear Regression.
 - Prediction using Random Forest.
 - Prediction using HistGradientBoosting.
 - Option to compare all three models.
-- Historical route record information.
+- A simplified results table focused on train and prediction details.
+
+The results interface does not show the destination sequence, inferred operating-day columns, or historical-run counts. These are omitted from the user-facing results because they are not needed to compare the available predictions.
 
 ### Route Identification
 
@@ -206,9 +213,13 @@ A train service is considered a matching route when:
 
 Matching train services are grouped by train number, train name, and category.
 
-The application displays the number of distinct historical start dates represented by the matching service records.
+The user-selected date is used to filter services according to their available regular operating pattern, such as specific weekdays or daily operation.
 
-The destination sequence and scheduled arrival hour are used as inputs to the prediction models.
+This supports future-date searches even when the selected date is beyond the historical records, but it does not confirm live service status or guarantee that a train will operate.
+
+The application does not display historical-run counts or inferred operating-day columns to users.
+
+The destination sequence and scheduled arrival hour remain internal model inputs; they are not shown as result-table columns.
 
 **Important:** Historical routes are derived from the available 10% sample. They should not be interpreted as a complete or current railway timetable. Predictions do not use live source-station delay information.
 
@@ -230,7 +241,7 @@ MLProject/
 │       └── route_stops.parquet
 │
 ├── Models/
-│   └── bookwisely_all_models.joblib
+│   └── Book-Wisely_all_models.joblib
 │
 ├── Notebooks/
 │   └── main.ipynb
@@ -247,7 +258,7 @@ MLProject/
 └── requirements.txt
 ```
 
-The original raw dataset, 10% sample, and cleaned modeling Parquet file are maintained locally and excluded from GitHub.
+The original raw dataset, 10% sample, and cleaned modeling Parquet file are maintained locally and excluded from GitHub. Dataset source and creator are credited in the Dataset Description section.
 
 The saved model bundle and route-stop lookup file are required to run the application.
 
@@ -255,25 +266,25 @@ The saved model bundle and route-stop lookup file are required to run the applic
 
 ## 10. Installation and Setup
 
-### Step 1: Clone the repository
+### Step 1: Clone the Repository
 
 ```bash
 git clone <repository-url>
 ```
 
-### Step 2: Open the project directory
+### Step 2: Open the Project Directory
 
 ```bash
 cd MLProject
 ```
 
-### Step 3: Create a virtual environment
+### Step 3: Create a Virtual Environment
 
 ```bash
 python -m venv .venv
 ```
 
-### Step 4: Activate the environment
+### Step 4: Activate the Environment
 
 For Windows PowerShell:
 
@@ -281,7 +292,7 @@ For Windows PowerShell:
 .venv\Scripts\Activate.ps1
 ```
 
-### Step 5: Install dependencies
+### Step 5: Install Dependencies
 
 ```bash
 python -m pip install --upgrade pip
@@ -294,7 +305,7 @@ python -m pip install -r requirements.txt
 
 Ensure the following files are available:
 
-- `Models/bookwisely_all_models.joblib`
+- `Models/Book-Wisely_all_models.joblib`
 - `Data/processed/route_stops.parquet`
 
 Run the following command from the project root directory:
@@ -303,7 +314,7 @@ Run the following command from the project root directory:
 python -m streamlit run src/app.py
 ```
 
-The BookWisely application will open in your browser.
+The Book-Wisely application will open in your browser.
 
 ---
 
@@ -355,7 +366,7 @@ This dataset is intentionally excluded from GitHub because of its size.
 
 ## 14. Conclusion
 
-BookWisely demonstrates the application of data analysis and machine learning techniques to historical railway arrival delay prediction.
+Book-Wisely demonstrates the application of data analysis and machine learning techniques to historical railway arrival delay prediction.
 
 The project includes data preparation, exploratory data analysis, three regression algorithms, model evaluation, route identification, and a Streamlit-based prediction interface.
 
