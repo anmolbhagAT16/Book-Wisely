@@ -1,4 +1,4 @@
-# Book-Wisely – Train Arrival Delay Prediction
+# Book-Wisely : Train Arrival Delay Prediction
 
 Book-Wisely is a machine learning-based train arrival delay prediction project developed using Python, Pandas, and Scikit-learn.
 
