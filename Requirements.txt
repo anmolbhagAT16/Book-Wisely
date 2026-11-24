@@ -1,0 +1,23 @@
+﻿
+# Data manipulation and numerical computing
+numpy
+pandas
+
+# Data visualization
+matplotlib
+
+# Machine learning
+scikit-learn
+
+# Model saving and loading
+joblib
+
+# Parquet dataset support
+pyarrow
+
+# Web application
+streamlit>=1.57.0
+
+# Jupyter Notebook environment
+jupyter
+ipykernel
